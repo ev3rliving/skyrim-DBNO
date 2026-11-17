@@ -24,7 +24,7 @@ $taskCTest = Join-Path (Split-Path (Get-Command $CMake).Source -Parent) 'ctest.e
 if ($LASTEXITCODE -ne 0) { throw 'Regression checks failed.' }
 & $CMake --install "$PSScriptRoot/build" --component DBNO --prefix "$PSScriptRoot/dist/main"
 if ($LASTEXITCODE -ne 0) { throw 'DBNO staging failed.' }
-Compress-Archive -Path "$PSScriptRoot/dist/main/*" -DestinationPath "$PSScriptRoot/dist/SkyrimDBNO-1.0.0.zip" -Force
+Compress-Archive -Path "$PSScriptRoot/dist/main/*" -DestinationPath "$PSScriptRoot/dist/SkyrimDBNO-1.0.2.zip" -Force
 if ($WithVCD) {
     & $CMake --install "$PSScriptRoot/build" --component VCD --prefix "$PSScriptRoot/dist/vcd"
     if ($LASTEXITCODE -ne 0) { throw 'VCD staging failed.' }

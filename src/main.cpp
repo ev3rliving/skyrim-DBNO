@@ -6,6 +6,7 @@
 #include "Settings.h"
 #include "Strings.h"
 #include "UI.h"
+#include "RuntimeCompatibility.h"
 
 #include "plugin.h"
 
@@ -43,6 +44,7 @@ namespace
         if (a_msg->type == SKSE::MessagingInterface::kDataLoaded) {
             Settings::GetSingleton().Load();
             Settings::GetSingleton().ApplyLogLevel();
+            if (!RuntimeCompatibility::ValidatePlayerInterfaces()) return;
             Strings::Load();
             ReviveManager::CacheFormPointers();
             ReviveManager::BuildEditorIDMap();
@@ -75,7 +77,7 @@ namespace
 
 SKSEPluginVersion = []() noexcept {
     SKSE::PluginVersionData v{};
-    v.PluginVersion(REL::Version{ 1, 0, 0, 0 });
+    v.PluginVersion(REL::Version{ 1, 0, 2, 0 });
     v.PluginName("SkyrimDBNO");
     v.AuthorName("Skyrim DBNO contributors; based on Player Self Revive");
     v.UsesAddressLibrary();
@@ -84,6 +86,16 @@ SKSEPluginVersion = []() noexcept {
     return v;
 }();
 
+// SKSE 2.0.20 requires Query before Load; newer loaders use the version export.
+// Keep this free of runtime relocations: SKSE::Init has not run yet.
+SKSE_EXPORT bool SKSEPlugin_Query(const SKSE::QueryInterface* a_skse, SKSE::PluginInfo* a_info)
+{
+    a_info->infoVersion = SKSE::PluginInfo::kVersion;
+    a_info->name = Plugin::NAME.data();
+    a_info->version = REL::Version{ 1, 0, 2, 0 }.pack();
+    return !a_skse->IsEditor() && a_skse->RuntimeVersion() >= REL::Version{ 1, 5, 97, 0 };
+}
+
 SKSEPluginLoad(const SKSE::LoadInterface* a_skse)
 {
     InitLogger();
@@ -91,6 +103,9 @@ SKSEPluginLoad(const SKSE::LoadInterface* a_skse)
     SKSE::log::info("[SkyrimDBNO] {} v{}", Plugin::NAME, Plugin::VERSION);
 
     SKSE::Init(a_skse);
+
+    SKSE::log::info("[SkyrimDBNO] Runtime {}; family {}; Address Library v5 support enabled",
+        a_skse->RuntimeVersion().string(), REL::Module::IsAE() ? "AE (1.6/1.7+)" : "SE");
 
     SKSE::GetMessagingInterface()->RegisterListener(MessageHandler);
 

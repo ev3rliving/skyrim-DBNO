@@ -1,6 +1,6 @@
 # Skyrim DBNO - Down But Not Out
 
-**Version 1.0.0** - November 16, 2026
+**Version 1.0.2** - November 17, 2026
 
 A configurable down-but-not-out system, based on Player Self Revive by zfroggyman.
 Survive a hit at low health, enter bleedout, crawl, and hold a button to self-revive.
@@ -16,15 +16,21 @@ See [BUILDING.md](BUILDING.md) for a self-contained Windows source build.
 - Current Menu Framework versions also require [ImGui Icons](https://www.nexusmods.com/skyrimspecialedition/mods/114790).
 - Microsoft Visual C++ v14 Redistributable **x64** compatible with MSVC 14.44 or later.
 
-Install `SkyrimDBNO-1.0.0.zip` with your mod manager. Disable the original
+Install `SkyrimDBNO-1.0.2.zip` with your mod manager. Disable the original
 **Player Self Revive**; it is not a runtime requirement and must not run alongside
 this fork. No ESP/ESL or animation files are included. This mod itself does not
 require behavior generation.
 
-Tested in game on Skyrim **1.6.1170** during development. Built for SE/AE;
-other runtimes are unverified. VR is not supported. The 1.0.0 gameplay code is
-unchanged from the user-tested 0.1.9 build. The exact 1.0.0 package still needs
-a final in-game smoke test after installation.
+Tested in game on Skyrim **1.6.1170** during development. Built for SE/AE.
+Version 1.0.1 restored legacy loading on 1.5.97. Version 1.0.2 adds runtime
+interface validation and regression coverage for the existing 1.7.99/1.7.104
+support, including Address Library format 5. In-game testing on 1.5.97 and
+1.7.99/1.7.104 remains pending; future runtimes are unverified. VR is not supported.
+Use SKSE, Address Library, SkyPrompt and Menu Framework builds that support your
+exact game runtime. Version 1.0.2 passed a user smoke test on 1.6.1170;
+logs confirmed interface validation, hook/menu registration, bleedout entry,
+the downed-death ragdoll request and VCD crawl/restoration without DBNO errors.
+Gameplay rules are unchanged.
 
 ## Playing and configuring
 
@@ -63,7 +69,7 @@ to end and defers to death and active killmoves.
 Replace the old DBNO installation and keep only one active `SkyrimDBNO.dll`.
 Back up your customized INI before replacing files; development-version settings
 remain compatible. The optional experimental VCD patch already used with 0.1.6+
-can stay installed with 1.0.0. Its interface is unchanged.
+can stay installed with 1.0.2. Its interface is unchanged.
 
 ## Optional collision mods
 

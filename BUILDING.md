@@ -32,7 +32,7 @@ normal contributors should use the VS developer shell.
 
 ## Output
 
-- `dist/SkyrimDBNO-1.0.0.zip`: main mod only.
+- `dist/SkyrimDBNO-1.0.2.zip`: main mod only.
 - `dist/VCD-DBNO-experimental-1.zip`: optional VCD replacement, when requested.
 - `dist/main/` and `dist/vcd/`: staged install trees.
 

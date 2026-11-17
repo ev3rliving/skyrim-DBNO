@@ -1,7 +1,7 @@
 cmake_minimum_required(VERSION 3.26)
 cmake_policy(SET CMP0141 NEW)
 set(CMAKE_MSVC_DEBUG_INFORMATION_FORMAT Embedded)
-project(SkyrimDBNO VERSION 1.0.0 LANGUAGES C CXX)
+project(SkyrimDBNO VERSION 1.0.2 LANGUAGES C CXX)
 set(CMAKE_CXX_STANDARD 23)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 set(CMAKE_MSVC_RUNTIME_LIBRARY "MultiThreaded$<$<CONFIG:Debug>:Debug>DLL")
@@ -23,6 +23,13 @@ install(FILES README.md CHANGELOG.md COPYING.txt EXCEPTIONS.md THIRD-PARTY.md
     DESTINATION . COMPONENT DBNO)
 install(DIRECTORY licenses/ DESTINATION licenses COMPONENT DBNO)
 enable_testing()
+add_executable(DBNORuntimeTests tests/RuntimeCompatibilityTests.cpp)
+target_link_libraries(DBNORuntimeTests PRIVATE CommonLibSSE::CommonLibSSE)
+target_compile_definitions(DBNORuntimeTests PRIVATE ENABLE_COMMONLIBSSE_TESTING=1)
+add_test(NAME RuntimeCompatibility COMMAND DBNORuntimeTests)
+add_test(NAME PluginExports COMMAND "${CMAKE_COMMAND}"
+    "-DDUMPBIN=${CMAKE_LINKER}" "-DPLUGIN=$<TARGET_FILE:SkyrimDBNO>"
+    -P "${CMAKE_CURRENT_SOURCE_DIR}/tests/PluginExports.cmake")
 add_executable(DBNORulesTests tests/DBNORulesTests.cpp)
 target_include_directories(DBNORulesTests PRIVATE src)
 add_test(NAME DBNODamageRules COMMAND DBNORulesTests)
