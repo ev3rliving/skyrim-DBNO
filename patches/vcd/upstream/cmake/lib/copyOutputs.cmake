@@ -1,0 +1,31 @@
+
+function(copyOutputs TARGET_FOLDER)
+    # Copy the SKSE plugin .dll files into the SKSE/Plugins/ folder
+    set(DLL_FOLDER "${TARGET_FOLDER}/SKSE/Plugins")
+
+    message(STATUS "SKSE plugin output folder: ${DLL_FOLDER}")
+
+    add_custom_command(
+        TARGET "${PROJECT_NAME}"
+        POST_BUILD
+        COMMAND "${CMAKE_COMMAND}" -E make_directory "${DLL_FOLDER}"
+        COMMAND "${CMAKE_COMMAND}" -E copy_if_different "$<TARGET_FILE:${PROJECT_NAME}>" "${DLL_FOLDER}/$<TARGET_FILE_NAME:${PROJECT_NAME}>"
+        COMMAND "${CMAKE_COMMAND}" -E copy_directory "${CMAKE_SOURCE_DIR}/fonts" "${TARGET_FOLDER}"
+        COMMAND "${CMAKE_COMMAND}" -E copy_directory "${CMAKE_SOURCE_DIR}/presets" "${DLL_FOLDER}/${PROJECT_NAME}/Presets"
+        COMMAND "${CMAKE_COMMAND}" -E copy_directory "${CMAKE_SOURCE_DIR}/translation" "${DLL_FOLDER}/${PROJECT_NAME}/Translation"
+        COMMAND "${CMAKE_COMMAND}" -E copy_if_different "${CMAKE_SOURCE_DIR}/INI/Transformations.ini" "${DLL_FOLDER}/${PROJECT_NAME}/Transformations.ini"
+        VERBATIM
+    )
+
+
+    # Copy the PDB (if one is produced for this configuration)
+    add_custom_command(
+        TARGET "${PROJECT_NAME}"
+        POST_BUILD
+        COMMAND "${CMAKE_COMMAND}" -E copy_if_different
+                "$<TARGET_PDB_FILE:${PROJECT_NAME}>"
+                "${DLL_FOLDER}/$<TARGET_PDB_FILE_NAME:${PROJECT_NAME}>"
+        VERBATIM
+    )
+
+endfunction()

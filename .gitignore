@@ -1,0 +1,18 @@
+/build*/
+/dist/
+/out/
+/.vs/
+/.idea/
+**/__pycache__/
+CMakeUserPresets.json
+*.dll
+*.pdb
+*.lib
+*.obj
+*.exe
+*.zip
+*.log
+# Unused upstream demo media, font payload and binary test fixtures.
+/vendor/SkyPromptAPI/resources/gifs/
+/vendor/CommonLibSSE/tests/REL/*.bin
+/patches/vcd/upstream/fonts/

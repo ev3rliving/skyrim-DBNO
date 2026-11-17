@@ -1,0 +1,42 @@
+[
+  {
+    "name": "CommonLibSSE",
+    "revision": "7a60f4de794095d7b0f8928d1b930a52e9a7da83"
+  },
+  {
+    "name": "DirectXTK",
+    "revision": "524c655ee0b69c33f6dfec81878596b131f79671"
+  },
+  {
+    "name": "simpleini",
+    "revision": "ba82f709c7b4a084593aea8bc89ef6ff7f23efc6"
+  },
+  {
+    "name": "minhook",
+    "revision": "8af6b4acae5a9388fd742b56fa79ece89d96f823"
+  },
+  {
+    "name": "spdlog",
+    "revision": "vendored source snapshot; see component license"
+  },
+  {
+    "name": "rapidcsv",
+    "revision": "vendored source snapshot; see component license"
+  },
+  {
+    "name": "MenuFrameworkAPI",
+    "revision": "1dcb70179076aae4ab626f43c5baab2735ca5877"
+  },
+  {
+    "name": "SkyPromptAPI",
+    "revision": "1fe9d10d31fb0cb8c5074ddcfeba3f89518823e7"
+  },
+  {
+    "name": "CLibUtilsQTR",
+    "revision": "69b25fea84dd23cef287d3ca20ccd3d348c09cb1"
+  },
+  {
+    "name": "VCD",
+    "revision": "790cc9573a45262a44f9471642ebbe9fdff6c205"
+  }
+]

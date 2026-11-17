@@ -1,0 +1,27 @@
+name: Build and test
+on:
+  push:
+    branches: [main]
+  pull_request:
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  windows:
+    runs-on: windows-2022
+    timeout-minutes: 45
+    steps:
+      - uses: actions/checkout@v4
+      - name: Build both plugins and run regression checks
+        shell: cmd
+        run: |
+          call "C:\Program Files\Microsoft Visual Studio\2022\Enterprise\Common7\Tools\VsDevCmd.bat" -arch=x64
+          if errorlevel 1 exit /b 1
+          pwsh -NoProfile -File Build.ps1 -WithVCD -Jobs 2
+      - name: Upload test builds
+        uses: actions/upload-artifact@v4
+        with:
+          name: skyrim-dbno-test-builds
+          path: dist/*.zip
+          if-no-files-found: error
+          retention-days: 14

@@ -1,0 +1,7 @@
+{
+    "name": "DBNO Crawl",
+    "position": [0.0, 17.0, 0.0],
+    "radius": 0.28,
+    "firstPoint": [0.0, 0.0, 0.60],
+    "secondPoint": [0.0, 0.0, 0.28]
+}
